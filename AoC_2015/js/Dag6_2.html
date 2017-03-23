@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dag 6</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+<p id="info"></p>
+
+
+<script>
+
+    //Deklarerer variabler
+    var info = document.getElementById("info");
+    var X;
+    var Y;
+    var pos;
+    var allLights = new Set([]);
+    var startX;
+    var startY;
+    var sluttX;
+    var sluttY;
+    var koord;
+    var lightsOn = 0;
+    var instruksArr;
+    var startKoord;
+    var sluttKoord;
+
+    var input = `turn on 0,0 through 1,1
+toggle 0,0 through 1,1
+turn on 0,0 through 1,1
+turn off 0,0 through 1,1`;
+
+    var inpArr = input.split(`
+`);
+    console.log(inpArr);
+
+    //Definerer funksjoner som skal brukes senere:
+
+    function finnXY(coord){
+        switch (coord.indexOf(",")){
+            case 1:
+                X = coord[0];
+                break;
+            case 2:
+                X = coord[0] + "" + coord[1];
+                break;
+            case 3:
+                X = coord[0] + "" + coord[1] + "" + coord[2];
+                break;
+        }
+        switch (coord.indexOf(",")){
+            case 1:
+                Y = coord[2]+ "" + coord[3]+ "" + coord[4];
+                break;
+            case 2:
+                Y = coord[3]+ "" + coord[4]+ "" + coord[5];
+                break;
+            case 3:
+                Y = coord[4]+ "" + coord[5]+ "" + coord[6];
+                break;
+        }
+        Y = Y.replace(/\D/g,''); //fjerner alt annet enn tall, i tilfelle det blir inført verdier som er undefined
+
+    }
+
+    function theUsualStuff(){
+
+        console.log(koord);
+        koord = koord.split(` through `);
+        console.log(koord);
+
+        startKoord = koord[0];
+        console.log(startKoord);
+        sluttKoord = koord[1];
+        console.log(sluttKoord);
+
+
+
+        finnXY(startKoord);
+        startX = X;
+        startY = Y;
+        console.log("startX er " + startX);
+        console.log("startY er " + startY);
+
+        finnXY(sluttKoord);
+        sluttX = X;
+        sluttY = Y;
+        console.log("sluttX er " + sluttX);
+        console.log("sluttY er " + sluttY);
+    }
+
+    function turnOnTheSet(){
+        for (var i=startX; i<=sluttX;i++){
+            for(var u=startY; u<=sluttY; u++){
+                pos = i + "," + u;
+                allLights.add(pos);
+            }
+        }
+        console.log(allLights);
+        console.log("settet sin lengde er: " + allLights.size)
+    }
+
+    function turnOffTheSet(){
+        for (var i=startX; i<=sluttX;i++){
+            for(var u=startY; u<=sluttY; u++){
+                pos = i + "," + u;
+                if(allLights.has(pos) === true){
+                    allLights.delete(pos);
+                }
+            }
+        }
+        console.log(allLights);
+        console.log("settet sin lengde er: " + allLights.size)
+    }
+    function toggleTheSet(){
+        for (var i=startX; i<=sluttX;i++){
+            for(var u=startY; u<=sluttY; u++){
+                pos = i + "," + u;
+                if(allLights.has(pos) != true){
+                    allLights.add(pos);
+                }
+                else{
+                    allLights.delete(pos);
+                }
+            }
+        }
+        console.log(allLights);
+        console.log("settet sin lengde er: " + allLights.size)
+    }
+
+
+
+    //Forhåndsdefinerte funksjoner slutt
+
+    for(var i=0;i<inpArr.length;i++){
+        if(inpArr[i].match(/^turn on/)){
+            console.log("Fant turn on, i =  "+ i);
+
+            koord = inpArr[i].replace("turn on ", ''); //
+
+            theUsualStuff();
+
+            console.log("jeg kan fortsatt aksessere sluttX: " + sluttX);
+
+            turnOnTheSet();
+        }
+     else if(inpArr[i].match(/^turn off/)){
+            console.log("Fant turn off, i =  "+ i);
+
+            koord = inpArr[i].replace("turn off ", ''); //
+
+            theUsualStuff();
+
+            turnOffTheSet();
+        }
+     else if(inpArr[i].match(/^toggle/)) {
+            console.log("Fant toggle, i =  " + i);
+
+            koord = inpArr[i].replace("toggle ", ''); //
+
+            theUsualStuff();
+
+            toggleTheSet();
+        }
+    }
+
+    console.log(allLights);
+    console.log("settet sin lengde er: " + allLights.size)
+
+
+
+
+
+</script>
+</body>
+</html>

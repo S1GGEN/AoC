@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dag10</title>
+    <style>
+
+
+    </style>
+</head>
+<body>
+<p id="info"></p>
+
+
+<script>
+    var info = document.getElementById("info");
+
+    var input = "1113222113";
+    var result;
+    var repeatCount;
+    var nyttTall;
+
+    function doTheIteration(){
+        result = "";
+        repeatCount=0;
+        nyttTall ="";
+
+        //console.log(input);
+        //console.log("Loopen starter -------------------------------------------------------------------");
+
+        for(var i=0;i<input.length;i++){
+            //console.log("kjørte én gang ---------------------------------------------------------------");
+            if(repeatCount===0){
+                nyttTall = input[i];
+                repeatCount++;
+            }
+            else{
+                if(input[i]===input[i-1]){
+                    repeatCount++;
+                }
+                else{
+                    result+= repeatCount + "" + nyttTall;
+                    repeatCount = 0;
+                    nyttTall = input[i];
+                    repeatCount = 1;
+                }
+            }
+            if(i=== Number(input.length-1)){
+                if(repeatCount===0){repeatCount=1; nyttTall= input[i]}
+                result+= repeatCount + "" + nyttTall;
+            }
+        }
+
+
+        //console.log("Ferdig med loopen");
+        //console.log(result);
+        //console.log("Stringens lengde er " +result.length);
+
+        input = result;
+    }
+
+
+    for(var u=0;u<50;u++){
+        doTheIteration();
+        if(u===49){
+            console.log("Ferdig med hovedloopen");
+            console.log("Stringens lengde er " +result.length);
+            //console.log(result);
+            //console.log(input);
+        }
+    }
+
+
+</script>
+</body>
+</html>
