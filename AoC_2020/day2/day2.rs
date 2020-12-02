@@ -19,14 +19,13 @@ fn main() {
         }
     }
 
-    println!("count_1: {}", count_1);
-    println!("count_2: {}", count_2);
+    println!("Task 1: {}", count_1);
+    println!("Task 2: {}", count_2);
 }
 
 
 fn check_validity_1(min : u32, max : u32, match_char : char, password : &str) -> bool {
     let num_matches = password.matches(match_char).count();
-    // println!("num_matches: {}", num_matches);
     return num_matches as u32 >= min && num_matches as u32 <= max;
 }
 
@@ -35,9 +34,7 @@ fn check_validity_2(min : u32, max : u32, match_char : char, password : &str) ->
     let first_char = password.chars().nth((min - 1) as usize).unwrap();
     let second_char = password.chars().nth((max - 1) as usize).unwrap();
 
-    return
-        !(match_char == first_char && match_char == second_char)
-        && ((match_char == first_char) || (match_char ==  second_char));
+    return (match_char == first_char) ^ (match_char == second_char);
 }
 
 
