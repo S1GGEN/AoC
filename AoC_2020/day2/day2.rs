@@ -40,16 +40,12 @@ fn check_validity_2(min : u32, max : u32, match_char : char, password : &str) ->
 
 fn get_values(input_string : &str) -> (u32, u32, char, &str) {
     let mut split_iter = input_string.split(|c| c == '-' || c == ':' || c == ' ');
-    let min : &str = split_iter.next().unwrap();
 
+    let min = split_iter.next().unwrap();
     let max = split_iter.next().unwrap();
-
     let match_char = split_iter.next().unwrap();
-
-    // TODO: Find out if I can avoid this line:
-    let _stupid_space = split_iter.next();
-
-    let password = split_iter.next().unwrap();
+    // Skipping because of space after colon
+    let password = split_iter.skip(1).next().unwrap();
 
    return (to_int(min), to_int(max), match_char.chars().nth(0).unwrap(), password);
 }
