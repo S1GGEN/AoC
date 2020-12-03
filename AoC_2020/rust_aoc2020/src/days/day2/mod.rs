@@ -1,28 +1,48 @@
 use std::fs;
 use std::str;
 
-fn main() {
-    let filename = "input.txt";
-    let contents = fs::read_to_string(filename)
+pub fn load_input(filename : &str) -> String{
+    let input = fs::read_to_string(format!("src/days/day2/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
-    let mut count_1 = 0;
-    let mut count_2 = 0;
-    for line in contents.lines(){
-        let (min, max, match_char, password) = get_values(line);
-
-        if check_validity_1(min, max, match_char, password) {
-            count_1 += 1;
-        }
-        if check_validity_2(min, max, match_char, password) {
-            count_2 += 1;
-        }
-    }
-
-    println!("Task 1: {}", count_1);
-    println!("Task 2: {}", count_2);
+    return input;
 }
 
+pub fn one(contents : &String) -> String {
+     let mut count = 0;
+    for line in contents.lines(){
+        let (min, max, match_char, password) = parse_line(line);
+        count += check_validity_1(min, max, match_char, password) as u32;
+    }
+
+    // println!("Task 1: {}", count);
+    return format!("Task 1: {}", count);
+}
+
+pub fn two(contents : &String) -> String {
+    let mut count = 0;
+    for line in contents.lines(){
+        let (min, max, match_char, password) = parse_line(line);
+        count += check_validity_2(min, max, match_char, password) as u32;
+    }
+
+    // println!("Task 2: {}", count);
+    return format!("Task 2: {}", count);
+}
+
+pub fn both_parts(contents : &String) -> String{
+     let mut count_1 = 0;
+    let mut count_2 = 0;
+    for line in contents.lines(){
+        let (min, max, match_char, password) = parse_line(line);
+        count_1 += check_validity_1(min, max, match_char, password) as u32;
+        count_2 += check_validity_2(min, max, match_char, password) as u32;
+    }
+
+    // println!("Task 1: {}", count_1);
+    // println!("Task 2: {}", count_2);
+    return format!("Task 1: {} \n Task 2: {b}", count_1, b=count_2);
+}
 
 fn check_validity_1(min : u32, max : u32, match_char : char, password : &str) -> bool {
     let num_matches = password.matches(match_char).count();
@@ -38,7 +58,7 @@ fn check_validity_2(min : u32, max : u32, match_char : char, password : &str) ->
 }
 
 
-fn get_values(input_string : &str) -> (u32, u32, char, &str) {
+fn parse_line(input_string : &str) -> (u32, u32, char, &str) {
     let mut split_iter = input_string.split(|c| c == '-' || c == ':' || c == ' ');
 
     let min = split_iter.next().unwrap();

@@ -2,7 +2,6 @@ use std::fs;
 use std::str;
 
 pub fn load_input(filename : &str) -> String{
-    // let filename = "input";
     let input = fs::read_to_string(format!("src/days/day3/{}.txt", filename))
         .expect("Something went wrong reading the file");
 

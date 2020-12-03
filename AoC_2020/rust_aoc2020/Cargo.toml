@@ -17,6 +17,14 @@ name = "aoc2020"
 path = "src/bin/main.rs"
 bench = false
 
-[[benchmarks]]
+[[bench]]
+name = "day1"
+harness = false
+
+[[bench]]
+name = "day2"
+harness = false
+
+[[bench]]
 name = "day3"
 harness = false
