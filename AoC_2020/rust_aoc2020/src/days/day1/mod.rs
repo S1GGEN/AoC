@@ -1,46 +1,66 @@
-use std::fs;
-use std::str;
+use std::{
+    fs::File,
+    str,
+    io::{BufRead, BufReader},
+};
 
-pub fn load_input(filename : &str) -> String {
-    let contents = fs::read_to_string(format!("src/days/day1/{}.txt", filename))
+pub fn load_input(filename : &str) -> Vec<u32> {
+    let mut file = File::open(format!("src/days/day1/{}.txt", filename))
         .expect("Something went wrong reading the file");
+    let reader = BufReader::new(&mut file);
 
-    return contents;
+    let mut lines: Vec<u32> = reader
+        .lines()
+        .map(|l| l.expect("Couldn't read a line").parse().unwrap())
+        .collect();
+
+    lines.sort();
+
+    return lines;
 }
 
-pub fn one(contents : &String) -> String {
-    let mut results = "".to_string();
+fn get_target() -> u32 {
+    return 2020;
+}
 
-    'outer1: for line in contents.lines(){
-        for line2 in contents.lines() {
-                if to_int(line) + to_int(line2) == 2020 {
-                    results = format!("Task 1 {}",  to_int(line) * to_int(line2));
-                    break 'outer1
-                }
+pub fn one(lines : &Vec<u32>) -> String {
+    let target_sum = get_target();
+    let mut from_head = 0;
+    let mut from_tail = lines.len() - 1;
+    while from_head < from_tail {
+        let sum = lines[from_head] + lines[from_tail];
+
+        if sum < target_sum {
+            from_head += 1
+        } else if sum > target_sum {
+            from_tail -=1
+        } else {
+            return format!("Task 1 {}",  lines[from_head] * lines[from_tail]);
         }
+
     }
 
-    return results;
+    return format!("Task 1 FAILED!");
 }
 
-pub fn two(contents : &String) -> String {
-    let mut results = "".to_string();
 
-    'outer2: for line in contents.lines(){
-        for line2 in contents.lines() {
-            for line3 in contents.lines() {
-                if to_int(line) + to_int(line2) + to_int(line3) == 2020 {
-                    results = format!("Task 2 {}",  to_int(line) * to_int(line2) * to_int(line3));
-                    break 'outer2
-                }
+pub fn two(lines : &Vec<u32>) -> String {
+    for (i, &x) in lines.iter().enumerate() {
+        let target_sum = get_target() - x;
+        let mut from_head = i + 0;
+        let mut from_tail = lines.len() - 1;
+        while from_head < from_tail {
+            let sum = lines[from_head] + lines[from_tail];
+
+            if sum < target_sum {
+                from_head += 1
+            } else if sum > target_sum {
+                from_tail -= 1
+            } else {
+                return format!("Task 1 {}", x * lines[from_head] * lines[from_tail]);
             }
         }
     }
 
-    return results;
-}
-
-
-fn to_int(string : &str) -> u32 {
-    return string.parse::<u32>().unwrap();
+    return format!("Task 2 FAILED!");
 }

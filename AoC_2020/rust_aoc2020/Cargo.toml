@@ -17,6 +17,7 @@ name = "aoc2020"
 path = "src/bin/main.rs"
 bench = false
 
+
 [[bench]]
 name = "day1"
 harness = false
