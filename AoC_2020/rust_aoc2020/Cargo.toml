@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 regex = "1"
 libmath= "0.2.1"
-linked-list = "0.0.3"
+conditional = "0.1.1"
 
 [dev-dependencies]
 criterion = "0.3.3"
@@ -21,13 +21,5 @@ bench = false
 
 
 [[bench]]
-name = "day1"
-harness = false
-
-[[bench]]
-name = "day2"
-harness = false
-
-[[bench]]
-name = "day3"
+name = "day5"
 harness = false
