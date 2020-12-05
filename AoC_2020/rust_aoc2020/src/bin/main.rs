@@ -1,8 +1,6 @@
 use rust_aoc2020::days::{day1, day2, day3, day4, day5};
 
 fn main() {
-    // println!("Hello, world!");
-
     let input_1 = day1::load_input("input");
     println!("Day 1 {}", day1::one(&input_1));
     println!("Day 1 {}\n", day1::two(&input_1));
@@ -21,10 +19,8 @@ fn main() {
     println!("Day 4 {}", day4::one(&input_4));
     println!("Day 4 {}\n", day4::two(&input_4));
 
-
-
     let input_5 = day5::load_input("input");
     println!("Day 5 {}", day5::one(&input_5));
-    //println!("Day 5 {}\n", day5::two(&input_5));
+    println!("Day 5 {}\n", day5::two(&input_5));
 
 }

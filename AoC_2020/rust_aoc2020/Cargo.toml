@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 regex = "1"
 libmath= "0.2.1"
+linked-list = "0.0.3"
 
 [dev-dependencies]
 criterion = "0.3.3"
