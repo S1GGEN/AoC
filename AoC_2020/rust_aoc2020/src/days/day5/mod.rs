@@ -1,6 +1,5 @@
 use std::fs;
 use std::str;
-use regex::Regex;
 
 pub fn load_input(filename : &str) -> String{
     let input = fs::read_to_string(format!("src/days/day5/{}.txt", filename))
@@ -11,7 +10,7 @@ pub fn load_input(filename : &str) -> String{
 
 pub fn both(input : &str) -> String {
     let mut length = 0;
-    let mut min = 1000;
+    let mut min = 1016;
     let mut sum = 0;
 
     for line in input.lines() {
@@ -47,6 +46,7 @@ fn get_seat_id_from_line(line : &str) -> u32 {
             bin_string.push('1')
         }
     }
+
 
     let parsed = u32::from_str_radix(&*bin_string, 2).expect("Wææ");
     return parsed;
