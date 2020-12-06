@@ -20,7 +20,8 @@ fn main() {
     println!("Day 4 {}\n", day4::two(&input_4));
 
     let input_5 = day5::load_input("input");
-    println!("Day 5 {}", day5::one(&input_5));
-    println!("Day 5 {}\n", day5::two(&input_5));
+    // println!("Day 5 {}", day5::one(&input_5));
+    // println!("Day 5 {}\n", day5::two(&input_5));
+    println!("Day 5 {}\n", day5::both(&input_5));
 
 }
