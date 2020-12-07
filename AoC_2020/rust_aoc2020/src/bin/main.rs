@@ -26,4 +26,11 @@ fn main() {
     println!("Day 6 {}", day6::one(&input_6));
     println!("Day 6 {}\n", day6::two(&input_6));
 
+    /*
+    Day 7 ragequit
+    let input_7 = day7::load_input("input");
+    println!("Day 6 {}", day7::one(&input_7));
+    println!("Day 6 {}\n", day7::two(&input_7));
+     */
+
 }
