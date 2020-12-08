@@ -29,6 +29,9 @@ def get_out_sum(graph, node, multiplier):
         weight = int(graph.edges[node, out_node]['weight'])
         out_edge_sum += int(weight) * int(multiplier)
         out_edge_sum += get_out_sum(graph, out_node, weight * multiplier)
+    # Store this value in the node, so that we can access it directly later:
+    # graph.nodes[node]['sub_bags'] = x
+    # https://networkx.org/documentation/stable/tutorial.html#node-attributes
     return out_edge_sum
 
 def make_graph(task_input):
@@ -55,7 +58,7 @@ def make_graph(task_input):
     return graph
 
 def main():
-    input = open('input.txt', 'r')
+    input = open('day7/input.txt', 'r')
     print("Day 7 part 1:", one(input))
     print("Day 7 part 2:", two(input))
 

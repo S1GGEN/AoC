@@ -28,6 +28,7 @@ pub fn two(input : &str) -> String {
 }
 
 fn parse_line(line : &str) {
+    /*
     let mut words: Vec<&str> = line.split(" ")
         .filter(
             |x| (
@@ -61,4 +62,6 @@ fn parse_line(line : &str) {
         println!("not empty!");
 
     }
+
+     */
 }
