@@ -3,7 +3,7 @@ use std::str;
 use std::collections::HashSet;
 
 pub fn load_input(filename : &str) -> String{
-    let input = fs::read_to_string(format!("src/days/day8/{}.txt", filename))
+    let input = fs::read_to_string(format!("src/days/day08/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;

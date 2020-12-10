@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use rust_aoc2020::days::day6::*;
+use rust_aoc2020::days::day06::*;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     let input = load_input("input");

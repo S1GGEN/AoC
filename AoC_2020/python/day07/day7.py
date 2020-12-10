@@ -3,7 +3,7 @@ import networkx as nx
 
 
 def one():
-    task_input = open('day7/input.txt', 'r')
+    task_input = open('day07/input.txt', 'r')
     graph = make_graph(task_input)
     # print(len(graph.nodes))
     in_edges = get_in_edges(graph, "shiny_gold")
@@ -21,14 +21,14 @@ def get_in_edges(graph, node):
 
 
 def two():
-    task_input = open('day7/input.txt', 'r')
+    task_input = open('day07/input.txt', 'r')
     graph = make_graph(task_input)
     # print(len(graph.nodes))
     return get_out_sum(graph, "shiny_gold")
 
 
 def two_old():
-    task_input = open('day7/input.txt', 'r')
+    task_input = open('day07/input.txt', 'r')
     graph = make_graph(task_input)
     # print(len(graph.nodes))
     return get_out_sum_old(graph, "shiny_gold")
@@ -87,7 +87,7 @@ def make_graph(task_input):
 
 
 if __name__ == "__main__":
-    # input = open('day7/input.txt', 'r')
+    # input = open('day07/input.txt', 'r')
     print("Day 7 part 1:", one())
     print("Day 7 part 2:", two())
 

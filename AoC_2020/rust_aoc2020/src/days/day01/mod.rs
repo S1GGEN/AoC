@@ -5,7 +5,7 @@ use std::{
 };
 
 pub fn load_input(filename : &str) -> Vec<u32> {
-    let mut file = File::open(format!("src/days/day1/{}.txt", filename))
+    let mut file = File::open(format!("src/days/day01/{}.txt", filename))
         .expect("Something went wrong reading the file");
     let reader = BufReader::new(&mut file);
 
