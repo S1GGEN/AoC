@@ -22,7 +22,7 @@ fn calculate_one(input : &str) -> Option<u32> {
 
     loop {
         let this_iteration = seat_iteration(&*last_iteration);
-        if last_iteration == this_iteration {
+        if last_iteration == this_iteration { // This is probably immensely slow
             break;
         }
         last_iteration = this_iteration;
