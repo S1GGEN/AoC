@@ -1,0 +1,12 @@
+.idea
+.DS_Store
+**/Thumbs.db
+
+**.exe
+**.pdb
+
+**/venv
+
+**/target
+
+**/__pycache__
