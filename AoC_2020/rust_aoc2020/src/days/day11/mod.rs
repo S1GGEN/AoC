@@ -1,14 +1,14 @@
 use std::fs;
 use std::str;
 
-pub fn load_input(filename : &str) -> String{
+pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day11/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;
 }
 
-pub fn one(input : &str) -> String {
+pub fn one(input: &str) -> String {
     let result = calculate_one(input);
 
     if result == None {
@@ -17,12 +17,13 @@ pub fn one(input : &str) -> String {
     return format!("Task 1: {}", result.unwrap());
 }
 
-fn calculate_one(input : &str) -> Option<u32> {
-    let mut last_iteration  = seat_iteration(input);
+fn calculate_one(input: &str) -> Option<u32> {
+    let mut last_iteration = seat_iteration(input);
 
     loop {
         let this_iteration = seat_iteration(&*last_iteration);
-        if last_iteration == this_iteration { // This is probably immensely slow
+        if last_iteration == this_iteration {
+            // This is probably immensely slow
             break;
         }
         last_iteration = this_iteration;
@@ -33,8 +34,7 @@ fn calculate_one(input : &str) -> Option<u32> {
     return Some(count_occupied as u32);
 }
 
-
-fn seat_iteration(input : &str) -> String {
+fn seat_iteration(input: &str) -> String {
     let lines: Vec<&str> = input.lines().collect();
     let seating_width = lines[0].len();
 
@@ -46,7 +46,8 @@ fn seat_iteration(input : &str) -> String {
         for x in 0..seating_width {
             let seat = lines[y].chars().nth(x).unwrap();
             if seat != '.' {
-                let num_adjacent = num_adjacent_seats_occupied(&lines, seating_width as u32, (x as i32, y as i32));
+                let num_adjacent =
+                    num_adjacent_seats_occupied(&lines, seating_width as u32, (x as i32, y as i32));
                 if seat == 'L' && num_adjacent == 0 {
                     new_line.push('#')
                 } else if seat == '#' && num_adjacent >= 4 {
@@ -54,7 +55,7 @@ fn seat_iteration(input : &str) -> String {
                 } else {
                     new_line.push(seat)
                 }
-            }  else {
+            } else {
                 new_line.push(seat)
             }
         }
@@ -68,32 +69,31 @@ fn seat_iteration(input : &str) -> String {
     return new_seat_chart;
 }
 
-fn num_adjacent_seats_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i32)) -> u32 {
+fn num_adjacent_seats_occupied(lines: &Vec<&str>, seating_width: u32, pos: (i32, i32)) -> u32 {
     let (x, y) = pos;
     let mut num_occupied = 0;
 
     // NORTH
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x, y-1)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x, y - 1)) as u32;
     // NORTH-WEST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x+1, y-1)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x + 1, y - 1)) as u32;
     // WEST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x+1, y)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x + 1, y)) as u32;
     // SOUTH-WEST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x+1, y+1)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x + 1, y + 1)) as u32;
     // SOUTH
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x, y+1)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x, y + 1)) as u32;
     // SOUTH-EAST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x-1, y+1)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x - 1, y + 1)) as u32;
     // EAST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x-1, y)) as u32;
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x - 1, y)) as u32;
     // NORTH-EAST
-    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x-1, y-1)) as u32;
-
+    num_occupied += safe_seat_is_occupied(&lines, seating_width, (x - 1, y - 1)) as u32;
 
     return num_occupied;
 }
 
-fn safe_seat_is_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i32)) -> bool {
+fn safe_seat_is_occupied(lines: &Vec<&str>, seating_width: u32, pos: (i32, i32)) -> bool {
     let (x, y) = pos;
     // Check if on board
     if x >= 0 && x < seating_width as i32 && y >= 0 && y < lines.len() as i32 {
@@ -105,8 +105,7 @@ fn safe_seat_is_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i3
     return false;
 }
 
-
-pub fn two(input : &str) -> String {
+pub fn two(input: &str) -> String {
     let result = calculate_two(input);
 
     if result == None {
@@ -115,10 +114,9 @@ pub fn two(input : &str) -> String {
     return format!("Task 2: {}", result.unwrap());
 }
 
-
-fn calculate_two(input : &str) -> Option<u32> {
+fn calculate_two(input: &str) -> Option<u32> {
     // println!("\n\n{}", input);
-    let mut last_iteration  = seat_iteration_2(input);
+    let mut last_iteration = seat_iteration_2(input);
 
     loop {
         let this_iteration = seat_iteration_2(&*last_iteration);
@@ -133,9 +131,7 @@ fn calculate_two(input : &str) -> Option<u32> {
     return Some(count_occupied as u32);
 }
 
-
-
-fn seat_iteration_2(input : &str) -> String {
+fn seat_iteration_2(input: &str) -> String {
     let lines: Vec<&str> = input.lines().collect();
     let seating_width = lines[0].len();
 
@@ -147,7 +143,8 @@ fn seat_iteration_2(input : &str) -> String {
         for x in 0..seating_width {
             let seat = lines[y].chars().nth(x).unwrap();
             if seat != '.' {
-                let num_in_sight = num_in_sight_seats_occupied(&lines, seating_width as u32, (x as i32, y as i32));
+                let num_in_sight =
+                    num_in_sight_seats_occupied(&lines, seating_width as u32, (x as i32, y as i32));
                 if seat == 'L' && num_in_sight == 0 {
                     new_line.push('#')
                 } else if seat == '#' && num_in_sight >= 5 {
@@ -155,7 +152,7 @@ fn seat_iteration_2(input : &str) -> String {
                 } else {
                     new_line.push(seat)
                 }
-            }  else {
+            } else {
                 new_line.push(seat)
             }
         }
@@ -169,7 +166,7 @@ fn seat_iteration_2(input : &str) -> String {
     return new_seat_chart;
 }
 
-fn num_in_sight_seats_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i32)) -> u32 {
+fn num_in_sight_seats_occupied(lines: &Vec<&str>, seating_width: u32, pos: (i32, i32)) -> u32 {
     let (x, y) = pos;
     let mut num_occupied = 0;
 
@@ -190,15 +187,23 @@ fn num_in_sight_seats_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i
     // NORTH-EAST
     num_occupied += check_dir_occupied(&lines, seating_width, (x, y), (-1, -1)) as u32;
 
-
     return num_occupied;
 }
 
-fn check_dir_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i32), dir: (i32, i32)) -> bool {
+fn check_dir_occupied(
+    lines: &Vec<&str>,
+    seating_width: u32,
+    pos: (i32, i32),
+    dir: (i32, i32),
+) -> bool {
     let (mut x, mut y) = pos;
     let (x_dir, y_dir) = dir;
 
-    while x + x_dir >= 0 && x + x_dir < seating_width as i32 && y + y_dir >= 0 && y + y_dir< lines.len() as i32 {
+    while x + x_dir >= 0
+        && x + x_dir < seating_width as i32
+        && y + y_dir >= 0
+        && y + y_dir < lines.len() as i32
+    {
         x += x_dir;
         y += y_dir;
 
@@ -212,4 +217,3 @@ fn check_dir_occupied(lines : &Vec<&str>, seating_width : u32, pos : (i32, i32),
     // If occupied found,  the coast is clear
     return false;
 }
-

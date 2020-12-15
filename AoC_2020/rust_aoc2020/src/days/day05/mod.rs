@@ -1,14 +1,14 @@
 use std::fs;
 use std::str;
 
-pub fn load_input(filename : &str) -> String{
+pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day05/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;
 }
 
-pub fn both(input : &str) -> String {
+pub fn both(input: &str) -> String {
     let mut length = 0;
     let mut min = 1016;
     let mut sum = 0;
@@ -33,11 +33,11 @@ pub fn both(input : &str) -> String {
 
     let missing_seat = expected_sum - sum;
 
-    return format!("Task 1: {}\nDay 5 Task 2: {y}", max, y=missing_seat);
+    return format!("Task 1: {}\nDay 5 Task 2: {y}", max, y = missing_seat);
 }
 
-fn get_seat_id_from_line(line : &str) -> u32 {
-    let mut bin_string : String = "".to_owned();
+fn get_seat_id_from_line(line: &str) -> u32 {
+    let mut bin_string: String = "".to_owned();
 
     for char in line.chars() {
         if char == 'F' || char == 'L' {
@@ -47,9 +47,6 @@ fn get_seat_id_from_line(line : &str) -> u32 {
         }
     }
 
-
     let parsed = u32::from_str_radix(&*bin_string, 2).expect("Wææ");
     return parsed;
 }
-
-

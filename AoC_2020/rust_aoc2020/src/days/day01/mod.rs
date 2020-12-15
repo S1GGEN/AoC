@@ -1,10 +1,10 @@
 use std::{
     fs::File,
-    str,
     io::{BufRead, BufReader},
+    str,
 };
 
-pub fn load_input(filename : &str) -> Vec<u32> {
+pub fn load_input(filename: &str) -> Vec<u32> {
     let mut file = File::open(format!("src/days/day01/{}.txt", filename))
         .expect("Something went wrong reading the file");
     let reader = BufReader::new(&mut file);
@@ -23,7 +23,7 @@ fn get_target() -> u32 {
     return 2020;
 }
 
-pub fn one(lines : &Vec<u32>) -> String {
+pub fn one(lines: &Vec<u32>) -> String {
     let target_sum = get_target();
     let mut from_head = 0;
     let mut from_tail = lines.len() - 1;
@@ -33,18 +33,16 @@ pub fn one(lines : &Vec<u32>) -> String {
         if sum < target_sum {
             from_head += 1
         } else if sum > target_sum {
-            from_tail -=1
+            from_tail -= 1
         } else {
-            return format!("Task 1 {}",  lines[from_head] * lines[from_tail]);
+            return format!("Task 1 {}", lines[from_head] * lines[from_tail]);
         }
-
     }
 
     return format!("Task 1 FAILED!");
 }
 
-
-pub fn two(lines : &Vec<u32>) -> String {
+pub fn two(lines: &Vec<u32>) -> String {
     for (i, &x) in lines.iter().enumerate() {
         let target_sum = get_target() - x;
         let mut from_head = i + 0;

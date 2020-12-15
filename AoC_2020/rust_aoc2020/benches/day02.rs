@@ -6,7 +6,9 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     c.bench_function("day 02 load input", |b| b.iter(|| load_input("input")));
     c.bench_function("day 02 part one", |b| b.iter(|| one(&input)));
     c.bench_function("day 02 part two", |b| b.iter(|| two(&input)));
-    c.bench_function("day 02 both parts together", |b| b.iter(|| both_parts(&input)));
+    c.bench_function("day 02 both parts together", |b| {
+        b.iter(|| both_parts(&input))
+    });
 }
 
 criterion_group!(benches, criterion_benchmark);

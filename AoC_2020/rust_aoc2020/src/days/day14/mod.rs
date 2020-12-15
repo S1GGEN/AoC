@@ -1,15 +1,15 @@
+use std::collections::HashMap;
 use std::fs;
 use std::str;
-use std::collections::HashMap;
 
-pub fn load_input(filename : &str) -> String{
+pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day14/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;
 }
 
-pub fn one(input : &str) -> String {
+pub fn one(input: &str) -> String {
     let result = calculate_one(input);
 
     match result {
@@ -18,15 +18,14 @@ pub fn one(input : &str) -> String {
     }
 }
 
-
-fn calculate_one(input : &str) -> Option<u64> {
+fn calculate_one(input: &str) -> Option<u64> {
     let mut lines = input.lines();
 
     let mut current_mask;
     let (_, first_mask) = lines.nth(0).unwrap().split_at(7);
     current_mask = first_mask;
 
-    let mut mem : HashMap<u64, u64> = HashMap::new();
+    let mut mem: HashMap<u64, u64> = HashMap::new();
 
     for line in lines {
         if line.starts_with("mask") {
@@ -59,7 +58,7 @@ fn calculate_one(input : &str) -> Option<u64> {
     Some(mem.values().sum::<u64>())
 }
 
-pub fn two(input : &str) -> String {
+pub fn two(input: &str) -> String {
     let result = calculate_two(input);
 
     match result {
@@ -68,15 +67,14 @@ pub fn two(input : &str) -> String {
     }
 }
 
-
-fn calculate_two(input : &str) -> Option<u64> {
+fn calculate_two(input: &str) -> Option<u64> {
     let mut lines = input.lines();
 
     let mut current_mask;
     let (_, first_mask) = lines.nth(0).unwrap().split_at(7);
     current_mask = first_mask;
 
-    let mut mem : HashMap<u64, u64> = HashMap::new();
+    let mut mem: HashMap<u64, u64> = HashMap::new();
 
     for line in lines {
         if line.starts_with("mask") {
@@ -96,7 +94,7 @@ fn calculate_two(input : &str) -> Option<u64> {
 
                 if mask_digit == '1' {
                     new_bin.push('1')
-                } else if mask_digit == '0'{
+                } else if mask_digit == '0' {
                     new_bin.push(bin_digit)
                 } else {
                     // Floating bit, ooooOOooo
@@ -109,14 +107,12 @@ fn calculate_two(input : &str) -> Option<u64> {
             for address in addresses {
                 mem.insert(u64::from_str_radix(&*address, 2).expect("Oopsie"), value);
             }
-
-
         }
     }
     Some(mem.values().sum::<u64>())
 }
 
-fn get_addresses(bin_string : String) -> Vec<String> {
+fn get_addresses(bin_string: String) -> Vec<String> {
     let mut addresses: Vec<String> = vec![];
 
     if bin_string.contains("X") {
@@ -133,8 +129,6 @@ fn get_addresses(bin_string : String) -> Vec<String> {
     addresses
 }
 
-
-fn to_int(string : &str) -> u64 {
+fn to_int(string: &str) -> u64 {
     return string.parse::<u64>().unwrap();
 }
-

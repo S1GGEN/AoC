@@ -1,1 +1,2 @@
-#[macro_use] pub mod days;
+#[macro_use]
+pub mod days;

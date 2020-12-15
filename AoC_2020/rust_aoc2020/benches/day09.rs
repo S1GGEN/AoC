@@ -6,8 +6,12 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     let part_one_result = calculate_one(&input);
     c.bench_function("day 09 load input", |b| b.iter(|| load_input("input")));
     c.bench_function("day 09 part one", |b| b.iter(|| one(&input)));
-    c.bench_function("day 09 part two including part one to find target", |b| b.iter(|| two(&input, None)));
-    c.bench_function("day 09 part two with target included", |b| b.iter(|| two(&input, part_one_result)));
+    c.bench_function("day 09 part two including part one to find target", |b| {
+        b.iter(|| two(&input, None))
+    });
+    c.bench_function("day 09 part two with target included", |b| {
+        b.iter(|| two(&input, part_one_result))
+    });
 }
 
 criterion_group!(benches, criterion_benchmark);

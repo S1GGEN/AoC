@@ -1,15 +1,15 @@
+use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::str;
-use std::collections::{HashSet, HashMap};
 
-pub fn load_input(filename : &str) -> String{
+pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day06/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;
 }
 
-pub fn one(input : &str) -> String {
+pub fn one(input: &str) -> String {
     let groups = input.split("\n\r");
     let mut sum = 0;
 
@@ -20,7 +20,7 @@ pub fn one(input : &str) -> String {
     return format!("Task 1: {}", sum);
 }
 
-pub fn two(input : &str) -> String {
+pub fn two(input: &str) -> String {
     let groups = input.split("\n\r");
     let mut sum = 0;
 
@@ -28,18 +28,17 @@ pub fn two(input : &str) -> String {
         sum += find_everyone_count(group);
     }
 
-
     return format!("Task 2: {}", sum);
 }
 
-fn find_any_count(group : &str) -> u32 {
-    let filtered : String = group.chars().filter(|c| !c.is_whitespace()).collect();
+fn find_any_count(group: &str) -> u32 {
+    let filtered: String = group.chars().filter(|c| !c.is_whitespace()).collect();
     let unique: HashSet<_> = filtered.chars().collect();
 
     return unique.len() as u32;
 }
 
-fn find_everyone_count(group : &str) -> u32 {
+fn find_everyone_count(group: &str) -> u32 {
     let mut frequency: HashMap<char, u32> = HashMap::new();
 
     let mut length: u32 = 0;
@@ -54,4 +53,3 @@ fn find_everyone_count(group : &str) -> u32 {
 
     return frequency.len() as u32;
 }
-

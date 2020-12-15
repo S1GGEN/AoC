@@ -1,14 +1,14 @@
 use std::fs;
 use std::str;
 
-pub fn load_input(filename : &str) -> String{
+pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day09/{}.txt", filename))
         .expect("Something went wrong reading the file");
 
     return input;
 }
 
-pub fn one(input : &str) -> String {
+pub fn one(input: &str) -> String {
     let result = calculate_one(input);
 
     if result == None {
@@ -17,12 +17,9 @@ pub fn one(input : &str) -> String {
     return format!("Task 1: {}", result.unwrap());
 }
 
-pub fn calculate_one(input : &str) -> Option<u64> {
+pub fn calculate_one(input: &str) -> Option<u64> {
     let preamble_size = 25;
-    let lines: Vec<u64> = input
-        .lines()
-        .map(|l| l.parse().unwrap())
-        .collect();
+    let lines: Vec<u64> = input.lines().map(|l| l.parse().unwrap()).collect();
     let mut invalid_num = None;
 
     for i in preamble_size..lines.len() {
@@ -38,7 +35,7 @@ pub fn calculate_one(input : &str) -> Option<u64> {
     return invalid_num;
 }
 
-fn is_valid(preamble: Vec<u64>, num_to_check : u64) -> bool {
+fn is_valid(preamble: Vec<u64>, num_to_check: u64) -> bool {
     for i in 0..preamble.len() {
         for j in 0..preamble.len() {
             if i != j {
@@ -52,7 +49,7 @@ fn is_valid(preamble: Vec<u64>, num_to_check : u64) -> bool {
     return false;
 }
 
-pub fn two(input : &str, part_one_result : Option<u64>) -> String {
+pub fn two(input: &str, part_one_result: Option<u64>) -> String {
     let result = calculate_two(input, part_one_result);
 
     if result == None {
@@ -61,7 +58,7 @@ pub fn two(input : &str, part_one_result : Option<u64>) -> String {
     return format!("Task 2: {}", result.unwrap());
 }
 
-fn calculate_two(input : &str, part_one_result : Option<u64>) -> Option<u64> {
+fn calculate_two(input: &str, part_one_result: Option<u64>) -> Option<u64> {
     // let target = 675280050; // Kinda cheat, but can save benchmarking time hehe
     let target;
 
@@ -71,11 +68,7 @@ fn calculate_two(input : &str, part_one_result : Option<u64>) -> Option<u64> {
         target = part_one_result.unwrap();
     }
 
-    let lines: Vec<u64> = input
-        .lines()
-        .map(|l| l.parse().unwrap())
-        .collect();
-
+    let lines: Vec<u64> = input.lines().map(|l| l.parse().unwrap()).collect();
 
     for search_size in 2..lines.len() {
         for start_index in 0..(lines.len() - search_size) {
@@ -89,8 +82,8 @@ fn calculate_two(input : &str, part_one_result : Option<u64>) -> Option<u64> {
     return None;
 }
 
-fn get_sum(nums : &[u64]) -> u64 {
-    let mut sum : u64 = 0;
+fn get_sum(nums: &[u64]) -> u64 {
+    let mut sum: u64 = 0;
 
     for num in nums.iter() {
         sum += num;
@@ -99,9 +92,9 @@ fn get_sum(nums : &[u64]) -> u64 {
     return sum;
 }
 
-fn get_min_max_sum(nums : &[u64]) -> u64 {
+fn get_min_max_sum(nums: &[u64]) -> u64 {
     let mut min = u64::MAX;
-    let mut max : u64 = 0;
+    let mut max: u64 = 0;
 
     for num in nums.iter() {
         if num > &max {
@@ -114,5 +107,3 @@ fn get_min_max_sum(nums : &[u64]) -> u64 {
 
     return min + max;
 }
-
-
