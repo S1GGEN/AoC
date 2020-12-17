@@ -1,6 +1,6 @@
 use rust_aoc2020::days::{
     day01, day02, day03, day04, day05, day06, day08, day09, day10, day11, day12, day13, day14,
-    day15,
+    day15, day16,
 };
 
 fn main() {
@@ -68,9 +68,14 @@ fn main() {
     println!("Day 14 {}", day14::one(&input_14));
     println!("Day 14 {}\n", day14::two(&input_14));
 
-     */
-
     let input_15 = day15::load_input("input");
     println!("Day 15 {}", day15::one(&input_15));
     println!("Day 15 {}\n", day15::two(&input_15));
+
+     */
+
+    let input_16 = day16::load_input("input");
+    println!("Day 16 {}", day16::one(&input_16));
+    println!("Day 16 {}\n", day16::two(&input_16));
+
 }
