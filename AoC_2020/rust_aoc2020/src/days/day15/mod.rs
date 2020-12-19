@@ -52,9 +52,7 @@ fn get_nth_spoken(input: &str, nth: usize) -> Option<usize> {
         let last_entry = number_history.get(&last_spoken);
 
         match last_entry {
-            None => {
-                to_speak = 0
-            }
+            None => to_speak = 0,
             _ => {
                 let last_entry_unwrapped = last_entry.unwrap();
                 to_speak = i - last_entry_unwrapped;

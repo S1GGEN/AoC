@@ -28,13 +28,13 @@ fn calculate_one(input: &str) -> Option<u64> {
     Some(count_active(state))
 }
 
-fn count_active(state : Vec<Vec<Vec<NodeState>>>) -> u64 {
+fn count_active(state: Vec<Vec<Vec<NodeState>>>) -> u64 {
     let mut count = 0;
     for z_dimension in state {
         for x_dimension in z_dimension {
             for node in x_dimension {
                 match node {
-                    NodeState::ACTIVE => {count += 1}
+                    NodeState::ACTIVE => count += 1,
                     NodeState::INACTIVE => {}
                 }
             }
@@ -44,7 +44,7 @@ fn count_active(state : Vec<Vec<Vec<NodeState>>>) -> u64 {
     count
 }
 
-fn print_state(state : &Vec<Vec<Vec<NodeState>>>, message : &str) {
+fn print_state(state: &Vec<Vec<Vec<NodeState>>>, message: &str) {
     println!("\n{}", message);
 
     for z_dimension in state {
@@ -55,20 +55,20 @@ fn print_state(state : &Vec<Vec<Vec<NodeState>>>, message : &str) {
     }
 }
 
-fn iteration(old_state : Vec<Vec<Vec<NodeState>>>) -> Vec<Vec<Vec<NodeState>>> {
+fn iteration(old_state: Vec<Vec<Vec<NodeState>>>) -> Vec<Vec<Vec<NodeState>>> {
     let mut new_state: Vec<Vec<Vec<NodeState>>> = vec![];
 
-    for z in 0..(old_state.len() + 2 ) {
-        let mut z_dimension : Vec<Vec<NodeState>> = vec![];
+    for z in 0..(old_state.len() + 2) {
+        let mut z_dimension: Vec<Vec<NodeState>> = vec![];
         for x in 0..(old_state[0].len() + 2) {
-            let mut x_dimension : Vec<NodeState> = vec![];
+            let mut x_dimension: Vec<NodeState> = vec![];
             for y in 0..(old_state[0][0].len() + 2) {
                 // println!("\nz: {} x: {} y: {}", z, x, y);
                 let pos_active = position_is_active(&old_state, z as i32, x as i32, y as i32);
                 // println!("pos_active: {}", pos_active);
-                let num_neighbours = num_active_neighbours(&old_state, z as i32, x as i32, y as i32);
+                let num_neighbours =
+                    num_active_neighbours(&old_state, z as i32, x as i32, y as i32);
                 // println!("num_neighbours: {}", num_neighbours);
-
 
                 if pos_active && (num_neighbours == 2 || num_neighbours == 3) {
                     x_dimension.push(NodeState::ACTIVE)
@@ -89,13 +89,15 @@ fn iteration(old_state : Vec<Vec<Vec<NodeState>>>) -> Vec<Vec<Vec<NodeState>>> {
     new_state
 }
 
-fn num_active_neighbours(old_state : &Vec<Vec<Vec<NodeState>>>, z : i32, x : i32, y : i32) -> u8 {
-    let mut number_active : u8 = 0;
+fn num_active_neighbours(old_state: &Vec<Vec<Vec<NodeState>>>, z: i32, x: i32, y: i32) -> u8 {
+    let mut number_active: u8 = 0;
     for check_z in (z - 1)..(z + 2) {
         for check_x in (x - 1)..(x + 2) {
             for check_y in (y - 1)..(y + 2) {
-                if !(check_z == z && check_x == x && check_y == y) { // A cube is not its own neighbour
-                    number_active += position_is_active(&old_state, check_z, check_x, check_y) as u8;
+                if !(check_z == z && check_x == x && check_y == y) {
+                    // A cube is not its own neighbour
+                    number_active +=
+                        position_is_active(&old_state, check_z, check_x, check_y) as u8;
                 }
             }
         }
@@ -104,26 +106,31 @@ fn num_active_neighbours(old_state : &Vec<Vec<Vec<NodeState>>>, z : i32, x : i32
     number_active
 }
 
-fn position_is_active(old_state : &Vec<Vec<Vec<NodeState>>>, z : i32, x : i32, y : i32) -> bool {
-    return if z < 1 || z > old_state.len() as i32 || x < 1 || x > old_state[0].len() as i32 || y < 1 || y > old_state[0][0].len() as i32 {
+fn position_is_active(old_state: &Vec<Vec<Vec<NodeState>>>, z: i32, x: i32, y: i32) -> bool {
+    return if z < 1
+        || z > old_state.len() as i32
+        || x < 1
+        || x > old_state[0].len() as i32
+        || y < 1
+        || y > old_state[0][0].len() as i32
+    {
         // All outside the old range are definitely inactive
         false
     } else {
         match old_state[z as usize - 1][x as usize - 1][y as usize - 1] {
-            NodeState::ACTIVE => { true }
-            NodeState::INACTIVE => { false }
+            NodeState::ACTIVE => true,
+            NodeState::INACTIVE => false,
         }
-    }
+    };
 }
-
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 enum NodeState {
     ACTIVE,
-    INACTIVE
+    INACTIVE,
 }
 
-fn get_initial_state(input : &str) -> Vec<Vec<Vec<NodeState>>> {
+fn get_initial_state(input: &str) -> Vec<Vec<Vec<NodeState>>> {
     let mut state: Vec<Vec<Vec<NodeState>>> = vec![vec![]];
 
     for line in input.lines() {
@@ -161,14 +168,14 @@ fn calculate_two(input: &str) -> Option<u64> {
     Some(count_active_4d(state))
 }
 
-fn count_active_4d(state : Vec<Vec<Vec<Vec<NodeState>>>>) -> u64 {
+fn count_active_4d(state: Vec<Vec<Vec<Vec<NodeState>>>>) -> u64 {
     let mut count = 0;
     for z_dimension in state {
         for w_dimension in z_dimension {
             for x_dimension in w_dimension {
                 for node in x_dimension {
                     match node {
-                        NodeState::ACTIVE => { count += 1 }
+                        NodeState::ACTIVE => count += 1,
                         NodeState::INACTIVE => {}
                     }
                 }
@@ -179,7 +186,7 @@ fn count_active_4d(state : Vec<Vec<Vec<Vec<NodeState>>>>) -> u64 {
     count
 }
 
-fn print_state_4d(state : &Vec<Vec<Vec<NodeState>>>, message : &str) {
+fn print_state_4d(state: &Vec<Vec<Vec<NodeState>>>, message: &str) {
     println!("\n{}", message);
 
     for z_dimension in state {
@@ -190,22 +197,24 @@ fn print_state_4d(state : &Vec<Vec<Vec<NodeState>>>, message : &str) {
     }
 }
 
-fn iteration_4d(old_state : Vec<Vec<Vec<Vec<NodeState>>>>) -> Vec<Vec<Vec<Vec<NodeState>>>> {
-    let mut new_state: Vec<Vec<Vec<Vec<NodeState>>>>= vec![];
+fn iteration_4d(old_state: Vec<Vec<Vec<Vec<NodeState>>>>) -> Vec<Vec<Vec<Vec<NodeState>>>> {
+    let mut new_state: Vec<Vec<Vec<Vec<NodeState>>>> = vec![];
 
-    for z in 0..(old_state.len() + 2 ) {
-        let mut z_dimension : Vec<Vec<Vec<NodeState>>> = vec![];
+    for z in 0..(old_state.len() + 2) {
+        let mut z_dimension: Vec<Vec<Vec<NodeState>>> = vec![];
         for w in 0..(old_state[0].len() + 2) {
-            let mut w_dimension : Vec<Vec<NodeState>> = vec![];
+            let mut w_dimension: Vec<Vec<NodeState>> = vec![];
             for x in 0..(old_state[0][0].len() + 2) {
                 let mut x_dimension: Vec<NodeState> = vec![];
                 for y in 0..(old_state[0][0][0].len() + 2) {
                     // println!("\nz: {} x: {} y: {}", z, x, y);
-                    let pos_active = position_is_active_4d(&old_state, z as i32, w as i32, x as i32, y as i32);
+                    let pos_active =
+                        position_is_active_4d(&old_state, z as i32, w as i32, x as i32, y as i32);
                     // println!("pos_active: {}", pos_active);
-                    let num_neighbours = num_active_neighbours_4d(&old_state, z as i32, w as i32, x as i32, y as i32);
+                    let num_neighbours = num_active_neighbours_4d(
+                        &old_state, z as i32, w as i32, x as i32, y as i32,
+                    );
                     // println!("num_neighbours: {}", num_neighbours);
-
 
                     if pos_active && (num_neighbours == 2 || num_neighbours == 3) {
                         x_dimension.push(NodeState::ACTIVE)
@@ -228,14 +237,23 @@ fn iteration_4d(old_state : Vec<Vec<Vec<Vec<NodeState>>>>) -> Vec<Vec<Vec<Vec<No
     new_state
 }
 
-fn num_active_neighbours_4d(old_state : &Vec<Vec<Vec<Vec<NodeState>>>>, z : i32, w : i32, x : i32, y : i32) -> u8 {
-    let mut number_active : u8 = 0;
+fn num_active_neighbours_4d(
+    old_state: &Vec<Vec<Vec<Vec<NodeState>>>>,
+    z: i32,
+    w: i32,
+    x: i32,
+    y: i32,
+) -> u8 {
+    let mut number_active: u8 = 0;
     for check_z in (z - 1)..(z + 2) {
         for check_w in (w - 1)..(w + 2) {
             for check_x in (x - 1)..(x + 2) {
                 for check_y in (y - 1)..(y + 2) {
-                    if !(check_z == z && check_w == w && check_x == x && check_y == y) { // A cube is not its own neighbour
-                        number_active += position_is_active_4d(&old_state, check_z, check_w, check_x, check_y) as u8;
+                    if !(check_z == z && check_w == w && check_x == x && check_y == y) {
+                        // A cube is not its own neighbour
+                        number_active +=
+                            position_is_active_4d(&old_state, check_z, check_w, check_x, check_y)
+                                as u8;
                     }
                 }
             }
@@ -245,25 +263,33 @@ fn num_active_neighbours_4d(old_state : &Vec<Vec<Vec<Vec<NodeState>>>>, z : i32,
     number_active
 }
 
-fn position_is_active_4d(old_state : &Vec<Vec<Vec<Vec<NodeState>>>>, z : i32, w : i32, x : i32, y : i32) -> bool {
-    return if
-    z < 1 || z > old_state.len() as i32
-        || w < 1 || w > old_state[0].len() as i32
-        || x < 1 || x > old_state[0][0].len() as i32
-        || y < 1 || y > old_state[0][0][0].len() as i32
+fn position_is_active_4d(
+    old_state: &Vec<Vec<Vec<Vec<NodeState>>>>,
+    z: i32,
+    w: i32,
+    x: i32,
+    y: i32,
+) -> bool {
+    return if z < 1
+        || z > old_state.len() as i32
+        || w < 1
+        || w > old_state[0].len() as i32
+        || x < 1
+        || x > old_state[0][0].len() as i32
+        || y < 1
+        || y > old_state[0][0][0].len() as i32
     {
         // All outside the old range are definitely inactive
         false
     } else {
-        match old_state[z as usize - 1][w as usize -1][x as usize - 1][y as usize - 1] {
-            NodeState::ACTIVE => { true }
-            NodeState::INACTIVE => { false }
+        match old_state[z as usize - 1][w as usize - 1][x as usize - 1][y as usize - 1] {
+            NodeState::ACTIVE => true,
+            NodeState::INACTIVE => false,
         }
-    }
+    };
 }
 
-
-fn get_initial_state_4d(input : &str) -> Vec<Vec<Vec<Vec<NodeState>>>> {
+fn get_initial_state_4d(input: &str) -> Vec<Vec<Vec<Vec<NodeState>>>> {
     let mut state: Vec<Vec<Vec<Vec<NodeState>>>> = vec![vec![vec![]]];
 
     for line in input.lines() {

@@ -86,10 +86,8 @@ fn main() {
 
      */
 
-
     let input_19_1 = day19::load_input("input_1");
     println!("Day 19 {}", day19::one(&input_19_1));
     let input_19_2 = day19::load_input("input_2");
     println!("Day 19 {}\n", day19::two(&input_19_2));
-
 }

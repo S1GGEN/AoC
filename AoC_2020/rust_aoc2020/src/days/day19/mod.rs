@@ -1,7 +1,7 @@
+use regex::Regex;
+use std::collections::HashMap;
 use std::fs;
 use std::str;
-use regex::Regex;
-use std::collections::{HashMap};
 
 pub fn load_input(filename: &str) -> String {
     let input = fs::read_to_string(format!("src/days/day19/{}.txt", filename))
@@ -26,11 +26,10 @@ fn calculate_one(input: &str) -> Option<u64> {
 
     let rules_semi_parsed = get_rules_semi_parsed(rules_string);
 
-    let mut regex_store : HashMap<u32, String> = HashMap::new();
+    let mut regex_store: HashMap<u32, String> = HashMap::new();
 
     let mut regex = get_regex(&rules_semi_parsed, 0, false, &mut regex_store);
     let regex_complete = format!("^{}$", regex);
-
 
     let re = Regex::new(&*regex_complete).unwrap();
     let mut count = 0;
@@ -43,9 +42,8 @@ fn calculate_one(input: &str) -> Option<u64> {
     Some(count)
 }
 
-
-fn get_rules_semi_parsed(rules_string : &str) -> HashMap<u32, Vec<Vec<&str>>> {
-    let mut rules= HashMap::new();
+fn get_rules_semi_parsed(rules_string: &str) -> HashMap<u32, Vec<Vec<&str>>> {
+    let mut rules = HashMap::new();
     for line in rules_string.lines() {
         let mut index_split = line.split(": ");
         let index = index_split.next().unwrap();
@@ -77,7 +75,6 @@ pub fn two(input: &str) -> String {
     }
 }
 
-
 fn calculate_two(input: &str) -> Option<u64> {
     let mut parts = input.split("\n\n");
     let rules_string = parts.next().unwrap();
@@ -85,7 +82,7 @@ fn calculate_two(input: &str) -> Option<u64> {
 
     let rules_semi_parsed = get_rules_semi_parsed(rules_string);
 
-    let mut regex_store : HashMap<u32, String> = HashMap::new();
+    let mut regex_store: HashMap<u32, String> = HashMap::new();
 
     let mut regex = get_regex(&rules_semi_parsed, 0, true, &mut regex_store);
     let regex_complete = format!("^{}$", regex);
@@ -102,7 +99,10 @@ fn calculate_two(input: &str) -> Option<u64> {
     Some(count)
 }
 
-fn get_11_regex(rules_semi_parsed :  &HashMap<u32, Vec<Vec<&str>>>, regex_store : &mut HashMap<u32, String>) -> String {
+fn get_11_regex(
+    rules_semi_parsed: &HashMap<u32, Vec<Vec<&str>>>,
+    regex_store: &mut HashMap<u32, String>,
+) -> String {
     // Returns the pattern 11: 42 31 | 42 11 31
 
     let regex_42 = &*get_regex(rules_semi_parsed, 42, true, regex_store);
@@ -114,19 +114,21 @@ fn get_11_regex(rules_semi_parsed :  &HashMap<u32, Vec<Vec<&str>>>, regex_store 
     head.push_str(&*format!("{}", regex_42));
     tail.push_str(&*format!("{}", regex_31));
 
-
     // Four iterations is the hacky-whacky minimum requirement for this exact input
     for _ in 0..4 {
         head.push_str(&*format!("({}", regex_42));
         tail = format!("{})?{}", regex_31, tail);
     }
 
-
     return format!("{}{}", head, tail);
 }
 
-
-fn get_regex(rules_semi_parsed : &HashMap<u32, Vec<Vec<&str>>>, index: u32, task2 : bool, regex_store : &mut HashMap<u32, String>) -> String {
+fn get_regex(
+    rules_semi_parsed: &HashMap<u32, Vec<Vec<&str>>>,
+    index: u32,
+    task2: bool,
+    regex_store: &mut HashMap<u32, String>,
+) -> String {
     let these_rules = rules_semi_parsed.get(&index).unwrap();
 
     let entry = regex_store.get(&index);
@@ -151,7 +153,6 @@ fn get_regex(rules_semi_parsed : &HashMap<u32, Vec<Vec<&str>>>, index: u32, task
 
         my_regex
     } else {
-
         let mut parts = vec![];
 
         for (i, part) in these_rules.iter().enumerate() {
@@ -181,12 +182,11 @@ fn get_regex(rules_semi_parsed : &HashMap<u32, Vec<Vec<&str>>>, index: u32, task
             final_regex.push_str(&*to_push);
         }
 
-
         final_regex = final_regex.replace("\"", "");
         regex_store.insert(index, final_regex.to_string());
 
         final_regex
-    }
+    };
 }
 
 fn to_int(string: &str) -> u32 {
