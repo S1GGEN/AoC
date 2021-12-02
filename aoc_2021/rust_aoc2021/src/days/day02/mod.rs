@@ -1,19 +1,28 @@
-use std::fs;
-use std::str;
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+    str,
+};
 
-pub fn load_input(filename: &str) -> String {
-    let input = fs::read_to_string(format!("src/days/day02/{}.txt", filename))
+pub fn load_input(filename: &str) -> Vec<(String, u32)> {
+    let mut file = File::open(format!("src/days/day02/{}.txt", filename))
         .expect("Something went wrong reading the file");
+    let reader = BufReader::new(&mut file);
 
-    return input;
+    let lines: Vec<(String, u32)> = reader
+        .lines()
+        .map(|l| parse_line(l.expect("Couldn't read a line")))
+        .collect();
+
+    return lines;
 }
 
-pub fn one(contents: &String) -> String {
+pub fn one(commands: &Vec<(String, u32)>) -> String {
     let mut depth = 0;
     let mut horizontal_pos = 0;
 
-    for line in contents.lines() {
-        let (dir, value) = parse_line(line);
+    for command in commands {
+        let (dir, value) = command;
         if dir == "forward" {
             horizontal_pos += value;
         } else if dir == "up" {
@@ -23,17 +32,16 @@ pub fn one(contents: &String) -> String {
         }
     }
 
-    // println!("Task 1: {}", count);
     return format!("Task 1: {} * {} = {}", depth, horizontal_pos, depth * horizontal_pos);
 }
 
-pub fn two(contents: &String) -> String {
+pub fn two(commands: &Vec<(String, u32)>) -> String {
     let mut aim = 0;
     let mut depth = 0;
     let mut horizontal_pos = 0;
 
-    for line in contents.lines() {
-        let (dir, value) = parse_line(line);
+    for command in commands {
+        let (dir, value) = command;
         if dir == "forward" {
             horizontal_pos += value;
             depth += aim * value;
@@ -44,12 +52,12 @@ pub fn two(contents: &String) -> String {
         }
     }
 
-    // println!("Task 1: {}", count);
     return format!("Task 2: {} * {} = {}", depth, horizontal_pos, depth * horizontal_pos);
 }
 
-fn parse_line(input_string: &str) -> (&str, u32) {
+
+fn parse_line(input_string: String) -> (String, u32) {
     let split: Vec<&str> = input_string.split_whitespace().take(2).collect();
 
-    return (split[0], split[1].parse().unwrap());
+    return (split[0].to_string(), split[1].parse().unwrap());
 }
