@@ -18,39 +18,30 @@ pub fn load_input(filename: &str) -> Vec<(String, u32)> {
 }
 
 pub fn one(commands: &Vec<(String, u32)>) -> String {
-    let mut depth = 0;
-    let mut horizontal_pos = 0;
-
-    for command in commands {
-        let (dir, value) = command;
-        if dir == "forward" {
-            horizontal_pos += value;
-        } else if dir == "up" {
-            depth -= value;
+    let (depth, horizontal_pos) = commands.iter().fold((0, 0), |acc, c| {
+        if c.0 == "forward" {
+            return (acc.0, acc.1 + c.1);
+        } else if c.0 == "up" {
+            return (acc.0 - c.1, acc.1);
         } else {
-            depth += value
+            return (acc.0 + c.1, acc.1);
         }
-    }
+    });
 
     return format!("Task 1: {} * {} = {}", depth, horizontal_pos, depth * horizontal_pos);
 }
 
 pub fn two(commands: &Vec<(String, u32)>) -> String {
-    let mut aim = 0;
-    let mut depth = 0;
-    let mut horizontal_pos = 0;
-
-    for command in commands {
-        let (dir, value) = command;
-        if dir == "forward" {
-            horizontal_pos += value;
-            depth += aim * value;
-        } else if dir == "up" {
-            aim -= value;
+    // tuple (depth, horizontal_pos, aim)
+    let (depth, horizontal_pos, _) = commands.iter().fold((0, 0, 0), |acc, c| {
+        if c.0 == "forward" {
+            return (acc.0 + acc.2 * c.1, acc.1 + c.1, acc.2);
+        } else if c.0 == "up" {
+            return (acc.0, acc.1, acc.2 - c.1);
         } else {
-            aim += value
+            return (acc.0, acc.1, acc.2 + c.1);
         }
-    }
+    });
 
     return format!("Task 2: {} * {} = {}", depth, horizontal_pos, depth * horizontal_pos);
 }
