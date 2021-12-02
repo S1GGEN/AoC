@@ -28,6 +28,4 @@ pub fn two(lines: &Vec<u32>) -> String {
     let count = lines.windows(4).fold(0, |acc, w| acc + (w[0] + w[1] + w[2] < w[1] + w[2] + w[3]) as u32);
 
     return format!("Task 2 {}", count);
-
-    // return format!("Task 2 FAILED!");
 }
