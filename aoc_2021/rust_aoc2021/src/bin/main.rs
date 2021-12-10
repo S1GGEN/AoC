@@ -1,5 +1,5 @@
 use rust_aoc2021::days::{
-    day01, day02, day03, day04, day05
+    day01, day02, day03, day04, day05, day06
 };
 
 fn main() {
@@ -25,4 +25,8 @@ fn main() {
     let input_5 = day05::load_input("input");
     println!("Day 5 {}", day05::one(&input_5));
     println!("Day 5 {}\n", day05::two(&input_5));
+
+    let input_6 = day06::load_input("input");
+    println!("Day 6 {}", day06::one(&input_6));
+    println!("Day 6 {}\n", day06::two(&input_6));
 }
